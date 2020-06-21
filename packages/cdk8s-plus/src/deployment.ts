@@ -160,7 +160,6 @@ export interface DeploymentSpecProps {
  * DeploymentSpec is the specification of the desired behavior of the Deployment.
  */
 export class DeploymentSpec {
-
   private readonly replicas?: number;
   private readonly labelSelectors: Record<string, string>;
 
@@ -169,8 +168,6 @@ export class DeploymentSpec {
    *
    * You can use this field to apply post instatiation mutations
    * to the spec.
-   *
-   * @see pod.PodTemplateSpec
    */
   public readonly podSpecTemplate: PodSpec;
 
