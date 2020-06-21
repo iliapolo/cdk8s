@@ -1,13 +1,13 @@
-import * as kplus from '../src';
-import { Testing } from 'cdk8s';
-import { Secret } from '../src';
+import * as kplus from "../src";
+import { Testing } from "cdk8s";
+import { Secret } from "../src";
 
-test('minimal definition', () => {
+test("minimal definition", () => {
   // GIVEN
   const chart = Testing.chart();
 
   // WHEN
-  new kplus.ServiceAccount(chart, 'my-service-account');
+  new kplus.ServiceAccount(chart, "my-service-account");
 
   // THEN
   expect(Testing.synth(chart)).toMatchInlineSnapshot(`
@@ -16,8 +16,6 @@ test('minimal definition', () => {
         "apiVersion": "v1",
         "kind": "ServiceAccount",
         "metadata": Object {
-          "annotations": Object {},
-          "labels": Object {},
           "name": "test-my-service-account-resource-a5be5a3b",
         },
       },
@@ -25,21 +23,21 @@ test('minimal definition', () => {
   `);
 });
 
-test('secrets can be added to the service account', () => {
+test("secrets can be added to the service account", () => {
   // GIVEN
   const chart = Testing.chart();
-  const secret1 = Secret.fromSecretName('my-secret-1');
-  const secret2 = Secret.fromSecretName('my-secret-2');
+  const secret1 = Secret.fromSecretName("my-secret-1");
+  const secret2 = Secret.fromSecretName("my-secret-2");
 
   // WHEN
-  const sa = new kplus.ServiceAccount(chart, 'my-service-account', {
-    secrets: [secret1],
+  const sa = new kplus.ServiceAccount(chart, "my-service-account", {
+    secrets: [secret1]
   });
 
   sa.addSecret(secret2);
 
   // THEN
-  const manifest = Testing.synth(chart)
-  expect(manifest[0]?.secrets[0]).toStrictEqual({ name: 'my-secret-1' });
-  expect(manifest[0]?.secrets[1]).toStrictEqual({ name: 'my-secret-2' });
+  const manifest = Testing.synth(chart);
+  expect(manifest[0]?.secrets[0]).toStrictEqual({ name: "my-secret-1" });
+  expect(manifest[0]?.secrets[1]).toStrictEqual({ name: "my-secret-2" });
 });
