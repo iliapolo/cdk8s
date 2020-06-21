@@ -141,7 +141,6 @@ describe('Pod', () => {
 
     expect(pod.spec).toBeDefined();
     expect(pod.name).toEqual('name');
-    expect(pod.apiObject).toBeDefined();
   });
 
   test('Generates spec lazily', () => {
