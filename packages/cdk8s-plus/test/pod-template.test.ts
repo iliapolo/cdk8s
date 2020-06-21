@@ -1,42 +1,42 @@
-import * as kplus from "../src";
-import { Testing } from "cdk8s";
+import * as kplus from '../src';
+import { Testing } from 'cdk8s';
 
-describe("PodTemplateSpec", () => {
-  test("Instantiation properties are all accepted", () => {
+describe('PodTemplateSpec', () => {
+  test('Instantiation properties are all accepted', () => {
     const podSpec = new kplus.PodSpec();
     const spec = new kplus.PodTemplateSpec({
       podSpec: podSpec,
       metadata: {
         labels: {
-          foo: "bar"
-        }
-      }
+          foo: 'bar',
+        },
+      },
     });
 
-    expect(spec.metadata.getLabel("foo")).toBe("bar");
+    expect(spec.metadata.getLabel('foo')).toBe('bar');
     expect(spec.podSpec).toBe(podSpec);
   });
 });
 
-describe("PodTemplate", () => {
-  test("Instatiation properties are all accepted", () => {
+describe('PodTemplate', () => {
+  test('Instatiation properties are all accepted', () => {
     const chart = Testing.chart();
     const spec = new kplus.PodTemplateSpec();
-    const podTemplate = new kplus.PodTemplate(chart, "PodTemplate", {
-      spec: spec
+    const podTemplate = new kplus.PodTemplate(chart, 'PodTemplate', {
+      spec: spec,
     });
 
     expect(podTemplate.spec).toBe(spec);
   });
 
-  test("Generates spec lazily", () => {
+  test('Generates spec lazily', () => {
     const chart = Testing.chart();
-    const podTemplate = new kplus.PodTemplate(chart, "PodTemplate");
+    const podTemplate = new kplus.PodTemplate(chart, 'PodTemplate');
 
     podTemplate.spec.podSpec.addContainer(
       new kplus.Container({
-        image: "image"
-      })
+        image: 'image',
+      }),
     );
 
     expect(Testing.synth(chart)).toMatchInlineSnapshot(`

@@ -1,17 +1,17 @@
-import * as kplus from "../src";
-import { Testing } from "cdk8s";
+import * as kplus from '../src';
+import { Testing } from 'cdk8s';
 
-test("Can be imported from secret name", () => {
-  const secret = kplus.Secret.fromSecretName("secret");
+test('Can be imported from secret name', () => {
+  const secret = kplus.Secret.fromSecretName('secret');
 
-  expect(secret.name).toEqual("secret");
+  expect(secret.name).toEqual('secret');
 });
 
-test("Can add data to new secrets", () => {
+test('Can add data to new secrets', () => {
   const chart = Testing.chart();
 
-  const secret = new kplus.Secret(chart, "Secret");
-  secret.addStringData("key", "value");
+  const secret = new kplus.Secret(chart, 'Secret');
+  secret.addStringData('key', 'value');
 
   expect(Testing.synth(chart)).toMatchInlineSnapshot(`
     Array [
