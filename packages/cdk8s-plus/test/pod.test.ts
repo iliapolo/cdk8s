@@ -120,7 +120,7 @@ describe("Pod", () => {
 
     expect(pod.spec).toBeDefined();
     expect(pod.name).toBeDefined();
-    expect(pod.apiObject).toBeDefined();
+
   });
 
   test("Can instantiate with props", () => {
