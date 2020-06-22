@@ -95,6 +95,14 @@ export class ConfigMap extends Resource implements IConfigMap {
   }
 
   /**
+   * Returns a data entry by `key` or undefined.
+   * @param key The entry key
+   */
+  public getData(key: string): string | undefined {
+    return this.data[key];
+  }
+
+  /**
    * Adds a binary data entry to the config map. BinaryData can contain byte
    * sequences that are not in the UTF-8 range.
    * @param key The key
@@ -106,6 +114,14 @@ export class ConfigMap extends Resource implements IConfigMap {
     this.verifyKeyAvailable(key);
 
     this.binaryData[key] = value;
+  }
+
+  /**
+   * Returns binary data by key.
+   * @param key The key
+   */
+  public getBinaryData(key: string): string | undefined {
+    return this.binaryData[key];
   }
 
   /**
@@ -126,7 +142,6 @@ export class ConfigMap extends Resource implements IConfigMap {
    * @param options Options
    */
   public addDirectory(localDir: string, options: AddDirectoryOptions = { }) {
-
     const exclude = options.exclude ?? [];
     const shouldInclude = (file: string) => {
       for (const pattern of exclude) {
@@ -168,9 +183,7 @@ export class ConfigMap extends Resource implements IConfigMap {
   private synthesizeBinaryData() {
     return undefinedIfEmpty(this.binaryData);
   }
-
 }
-
 
 /**
  * Options for `configmap.addDirectory()`

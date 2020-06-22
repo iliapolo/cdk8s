@@ -11,21 +11,18 @@ import { ApiObjectMetadata, ApiObjectMetadataDefinition } from 'cdk8s';
  * Properties for initialization of `Deployment`.
  */
 export interface DeploymentProps extends ResourceProps {
-
   /**
    * The spec of the deployment. Use `deployment.spec` to apply post instatiation mutations.
    *
    * @default - An empty spec will be created.
    */
   readonly spec?: DeploymentSpec;
-
 }
 
 /**
  * Options for exposing a deployment via a service.
  */
 export interface ExposeOptions {
-
   /**
    * The port number the service will bind to.
    */
@@ -68,7 +65,6 @@ export interface ExposeOptions {
 *
 **/
 export class Deployment extends Resource {
-
   /**
    * @see base.Resource.apiObject
    */
@@ -79,7 +75,6 @@ export class Deployment extends Resource {
    *
    * You can use this field to apply post instantiation mutations
    * to the spec.
-   *
    */
   public readonly spec: DeploymentSpec;
 
@@ -91,7 +86,7 @@ export class Deployment extends Resource {
     this.apiObject = new k8s.Deployment(this, 'Pod', {
       metadata: props.metadata,
       spec: lazy(() => this.spec._toKube(this)),
-    })
+    });
   }
 
   /**
@@ -102,30 +97,27 @@ export class Deployment extends Resource {
    * @param options - Options.
    */
   public expose(options: ExposeOptions): Service {
-
     const containers = this.spec.podSpecTemplate.containers;
-
     if (containers.length === 0) {
       throw new Error('Cannot expose a deployment without containers');
     }
 
     // create a label and attach it to the deployment pods
-    const selector = 'cdk8s.deployment'
-    const matcher = Node.of(this).uniqueId
+    const selector = 'cdk8s.deployment';
+    const matcher = Node.of(this).uniqueId;
 
     const service = new Service(this, 'Service', {
       spec: new ServiceSpec({
         type: options.serviceType ?? ServiceType.CLUSTER_IP,
       }),
-    })
+    });
 
-    service.spec.selectByLabel(selector, matcher);
-    service.spec.serve({
-      port: options.port,
+    service.spec.addSelector(selector, matcher);
+    service.spec.serve(options.port, {
       // just a PoC, we assume the first container is the main one.
       // TODO: figure out what the correct thing to do here.
       targetPort: containers[0].port,
-    })
+    });
 
     return service;
   }
@@ -138,9 +130,7 @@ export class Deployment extends Resource {
 export interface DeploymentSpecProps {
 
   /**
-   * Number of desired pods. This is a pointer to distinguish between explicit zero and not
-   * specified. Defaults to 1.
-   *
+   * Number of desired pods.
    * @default 1
    */
   readonly replicas?: number;
@@ -160,8 +150,10 @@ export interface DeploymentSpecProps {
  * DeploymentSpec is the specification of the desired behavior of the Deployment.
  */
 export class DeploymentSpec {
-  private readonly replicas?: number;
-  private readonly labelSelectors: Record<string, string>;
+  /**
+   * Number of desired pods.
+   */
+  public readonly replicas?: number;
 
   /**
    * Provides access to the underlying pod template spec.
@@ -171,7 +163,12 @@ export class DeploymentSpec {
    */
   public readonly podSpecTemplate: PodSpec;
 
+  /**
+   * Template for pod metadata.
+   */
   public readonly podMetadataTemplate: ApiObjectMetadataDefinition;
+
+  private readonly labelSelectors: Record<string, string>;
 
   constructor(props: DeploymentSpecProps = {}) {
     this.replicas = props.replicas ?? 1;
