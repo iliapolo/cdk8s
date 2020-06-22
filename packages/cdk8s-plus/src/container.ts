@@ -203,14 +203,14 @@ export class Container {
   public readonly workingDir?: string;
 
   private readonly _command?: readonly string[];
-  private readonly env: { [name: string]: EnvValue };
+  private readonly _env: { [name: string]: EnvValue };
 
   constructor(props: ContainerProps) {
     this.name = props.name ?? 'main';
     this.image = props.image;
     this.port = props.port;
     this._command = props.command;
-    this.env = props.env ?? { };
+    this._env = props.env ?? { };
     this.workingDir = props.workingDir;
     this.mounts = props.volumeMounts ?? [];
   }
@@ -233,15 +233,16 @@ export class Container {
    * @param value - The variable value.
    */
   public addEnv(name: string, value: EnvValue) {
-    this.env[name] = value;
+    this._env[name] = value;
   }
 
   /**
-   * Gets an environment value by key.
-   * @param name The environment key
+   * The environment variables for this container.
+   *
+   * Returns an immutable copy.
    */
-  public getEnv(name: string): EnvValue | undefined {
-    return this.env[name];
+  public get env(): Record<string, EnvValue> {
+    return { ...this._env };
   }
 
   /**
@@ -287,7 +288,7 @@ export class Container {
       volumeMounts,
       command: this.command,
       workingDir: this.workingDir,
-      env: renderEnv(this.env),
+      env: renderEnv(this._env),
     };
   }
 }

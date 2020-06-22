@@ -113,6 +113,8 @@ new ConfigMap(scope: Construct, id: string, props?: ConfigMapProps)
 Name | Type | Description 
 -----|------|-------------
 **apiObject**🔹 | <code>[ApiObject](#cdk8s-apiobject)</code> | The underlying cdk8s API object.
+**binaryData**🔹 | <code>Map<string, string></code> | The binary data associated with this config map.
+**data**🔹 | <code>Map<string, string></code> | The data associated with this config map.
 
 ### Methods
 
@@ -190,38 +192,6 @@ addFile(localFile: string, key?: string): void
 
 
 
-#### getBinaryData(key)🔹 <a id="cdk8s-plus-configmap-getbinarydata"></a>
-
-Returns binary data by key.
-
-<span style="text-decoration: underline">Usage:</span>
-
-```ts
-getBinaryData(key: string): string
-```
-
-<span style="text-decoration: underline">Parameters:</span>
-* **key** (<code>string</code>)  The key.
-
-<span style="text-decoration: underline">Returns</span>:
-* <code>string</code>
-
-#### getData(key)🔹 <a id="cdk8s-plus-configmap-getdata"></a>
-
-Returns a data entry by `key` or undefined.
-
-<span style="text-decoration: underline">Usage:</span>
-
-```ts
-getData(key: string): string
-```
-
-<span style="text-decoration: underline">Parameters:</span>
-* **key** (<code>string</code>)  The entry key.
-
-<span style="text-decoration: underline">Returns</span>:
-* <code>string</code>
-
 #### *static* fromConfigMapName(name)🔹 <a id="cdk8s-plus-configmap-fromconfigmapname"></a>
 
 Represents a ConfigMap created elsewhere.
@@ -273,6 +243,7 @@ new Container(props: ContainerProps)
 
 Name | Type | Description 
 -----|------|-------------
+**env**🔹 | <code>Map<string, [EnvValue](#cdk8s-plus-envvalue)></code> | The environment variables for this container.
 **image**🔹 | <code>string</code> | The container image.
 **mounts**🔹 | <code>Array<[VolumeMount](#cdk8s-plus-volumemount)></code> | Volume mounts configured for this container.
 **name**🔹 | <code>string</code> | The name of the container.
@@ -302,22 +273,6 @@ addEnv(name: string, value: EnvValue): void
 
 
 
-
-#### getEnv(name)🔹 <a id="cdk8s-plus-container-getenv"></a>
-
-Gets an environment value by key.
-
-<span style="text-decoration: underline">Usage:</span>
-
-```ts
-getEnv(name: string): EnvValue
-```
-
-<span style="text-decoration: underline">Parameters:</span>
-* **name** (<code>string</code>)  The environment key.
-
-<span style="text-decoration: underline">Returns</span>:
-* <code>[EnvValue](#cdk8s-plus-envvalue)</code>
 
 #### mount(path, volume, options?)🔹 <a id="cdk8s-plus-container-mount"></a>
 
@@ -457,6 +412,7 @@ new DeploymentSpec(props?: DeploymentSpecProps)
 
 Name | Type | Description 
 -----|------|-------------
+**labelSelector**🔹 | <code>Map<string, string></code> | The labels this deployment will match against in order to select pods.
 **podMetadataTemplate**🔹 | <code>[ApiObjectMetadataDefinition](#cdk8s-apiobjectmetadatadefinition)</code> | Template for pod metadata.
 **podSpecTemplate**🔹 | <code>[PodSpec](#cdk8s-plus-podspec)</code> | Provides access to the underlying pod template spec.
 **replicas**?🔹 | <code>number</code> | Number of desired pods.<br/><span style="text-decoration: underline">*Optional*</span>

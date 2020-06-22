@@ -121,7 +121,6 @@ export class Deployment extends Resource {
 
     return service;
   }
-
 }
 
 /**
@@ -168,14 +167,14 @@ export class DeploymentSpec {
    */
   public readonly podMetadataTemplate: ApiObjectMetadataDefinition;
 
-  private readonly labelSelectors: Record<string, string>;
+  private readonly _labelSelector: Record<string, string>;
 
   constructor(props: DeploymentSpecProps = {}) {
     this.replicas = props.replicas ?? 1;
     this.podSpecTemplate = new PodSpec(props.podSpecTemplate);
     this.podMetadataTemplate = new ApiObjectMetadataDefinition(props.podMetadataTemplate);
 
-    this.labelSelectors = {};
+    this._labelSelector = {};
   }
 
   /**
@@ -186,7 +185,18 @@ export class DeploymentSpec {
    * @param value - The label value.
    */
   public selectByLabel(key: string, value: string) {
-    this.labelSelectors[key] = value;
+    this._labelSelector[key] = value;
+  }
+
+  /**
+   * The labels this deployment will match against in order to select pods.
+   *
+   * Use `selectByLabel` to add labels.
+   *
+   * Returns an immutable copy.
+   */
+  public get labelSelector(): Record<string, string> {
+    return { ...this._labelSelector };
   }
 
   /**
@@ -210,7 +220,7 @@ export class DeploymentSpec {
         spec: this.podSpecTemplate._toKube(),
       },
       selector: {
-        matchLabels: this.labelSelectors,
+        matchLabels: this._labelSelector,
       },
     };
   }

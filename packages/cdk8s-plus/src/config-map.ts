@@ -58,8 +58,8 @@ export class ConfigMap extends Resource implements IConfigMap {
 
   protected readonly apiObject: cdk8s.ApiObject;
 
-  private readonly binaryData: { [key: string]: string } = { };
-  private readonly data: { [key: string]: string } = { };
+  private readonly _binaryData: { [key: string]: string } = { };
+  private readonly _data: { [key: string]: string } = { };
 
   public constructor(scope: Construct, id: string, props: ConfigMapProps = { }) {
     super(scope, id, props);
@@ -91,15 +91,16 @@ export class ConfigMap extends Resource implements IConfigMap {
   public addData(key: string, value: string) {
     this.verifyKeyAvailable(key);
 
-    this.data[key] = value;
+    this._data[key] = value;
   }
 
   /**
-   * Returns a data entry by `key` or undefined.
-   * @param key The entry key
+   * The data associated with this config map.
+   *
+   * Returns an immutable copy.
    */
-  public getData(key: string): string | undefined {
-    return this.data[key];
+  public get data(): Record<string, string> {
+    return { ...this._data };
   }
 
   /**
@@ -113,15 +114,16 @@ export class ConfigMap extends Resource implements IConfigMap {
   public addBinaryData(key: string, value: string) {
     this.verifyKeyAvailable(key);
 
-    this.binaryData[key] = value;
+    this._binaryData[key] = value;
   }
 
   /**
-   * Returns binary data by key.
-   * @param key The key
+   * The binary data associated with this config map.
+   *
+   * Returns an immutable copy.
    */
-  public getBinaryData(key: string): string | undefined {
-    return this.binaryData[key];
+  public get binaryData(): Record<string, string> {
+    return { ...this._binaryData };
   }
 
   /**
@@ -171,17 +173,17 @@ export class ConfigMap extends Resource implements IConfigMap {
   }
 
   private verifyKeyAvailable(key: string) {
-    if (key in this.data || key in this.binaryData) {
+    if (key in this._data || key in this._binaryData) {
       throw new Error(`unable to add a ConfigMap entry with key "${key}". It is already used`);
     }
   }
 
   private synthesizeData() {
-    return undefinedIfEmpty(this.data);
+    return undefinedIfEmpty(this._data);
   }
 
   private synthesizeBinaryData() {
-    return undefinedIfEmpty(this.binaryData);
+    return undefinedIfEmpty(this._binaryData);
   }
 }
 
