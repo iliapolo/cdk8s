@@ -51,12 +51,12 @@ container.mount(appPath, appVolume);
 
 // now lets create a deployment to run a few instances of this container
 const deployment = new kplus.Deployment(chart, 'Deployment', {
-  spec: new kplus.DeploymentSpec({
+  spec: {
     replicas: 3,
     podSpecTemplate: {
       containers: [ container ]
     }
-  }),
+  },
 });
 
 // finally, we expose the deployment as a load balancer service and make it run
@@ -346,11 +346,11 @@ const app = new k.App();
 const chart = new k.Chart(app, 'Chart');
 
 new kplus.Deployment(chart, 'FrontEnds', {
-  spec: new kplus.DeploymentSpec({
+  spec: {
     podSpecTemplate: {
       containers: [ new kplus.Container({ image: 'node' }) ],
     }
-  }),
+  },
 });
 ```
 

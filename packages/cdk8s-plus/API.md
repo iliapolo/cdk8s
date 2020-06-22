@@ -7,18 +7,18 @@ Name|Description
 [ConfigMap](#cdk8s-plus-configmap)|ConfigMap holds configuration data for pods to consume.
 [Container](#cdk8s-plus-container)|A single application container that you want to run within a pod.
 [Deployment](#cdk8s-plus-deployment)|A Deployment provides declarative updates for Pods and ReplicaSets.
-[DeploymentSpec](#cdk8s-plus-deploymentspec)|DeploymentSpec is the specification of the desired behavior of the Deployment.
+[DeploymentSpecDefinition](#cdk8s-plus-deploymentspecdefinition)|Provides read/write API over the `DeploymentSpec` struct.
 [Duration](#cdk8s-plus-duration)|Represents a length of time.
 [EnvValue](#cdk8s-plus-envvalue)|Utility class for creating reading env values from various sources.
 [Job](#cdk8s-plus-job)|A Job creates one or more Pods and ensures that a specified number of them successfully terminate.
-[JobSpec](#cdk8s-plus-jobspec)|*No description*
+[JobSpecDefinition](#cdk8s-plus-jobspecdefinition)|Provides read/write API over the `JobSpec` struct.
 [Pod](#cdk8s-plus-pod)|Pod is a collection of containers that can run on a host.
-[PodSpec](#cdk8s-plus-podspec)|A description of a pod.
+[PodSpecDefinition](#cdk8s-plus-podspecdefinition)|Provides read/write API over the `PodSpec` struct.
 [Resource](#cdk8s-plus-resource)|Base class for all Kubernetes objects in stdk8s.
 [Secret](#cdk8s-plus-secret)|Kubernetes Secrets let you store and manage sensitive information, such as passwords, OAuth tokens, and ssh keys.
 [Service](#cdk8s-plus-service)|An abstract way to expose an application running on a set of Pods as a network service.
 [ServiceAccount](#cdk8s-plus-serviceaccount)|A service account provides an identity for processes that run in a Pod.
-[ServiceSpec](#cdk8s-plus-servicespec)|A description of a service.
+[ServiceSpecDefinition](#cdk8s-plus-servicespecdefinition)|Provides read/write API over the `ServiceSpec` struct.
 [Size](#cdk8s-plus-size)|Represents the amount of digital storage.
 [Volume](#cdk8s-plus-volume)|Volume represents a named volume in a pod that may be accessed by any container in the pod.
 
@@ -32,24 +32,24 @@ Name|Description
 [ConfigMapVolumeOptions](#cdk8s-plus-configmapvolumeoptions)|Options for the ConfigMap-based volume.
 [ContainerProps](#cdk8s-plus-containerprops)|Properties for creating a container.
 [DeploymentProps](#cdk8s-plus-deploymentprops)|Properties for initialization of `Deployment`.
-[DeploymentSpecProps](#cdk8s-plus-deploymentspecprops)|Properties for initialization of `DeploymentSpec`.
+[DeploymentSpec](#cdk8s-plus-deploymentspec)|DeploymentSpec is the specification of the desired behavior of the Deployment.
 [EmptyDirVolumeOptions](#cdk8s-plus-emptydirvolumeoptions)|Options for volumes populated with an empty directory.
 [EnvValueFromConfigMapOptions](#cdk8s-plus-envvaluefromconfigmapoptions)|Options to specify an envionment variable value from a ConfigMap key.
 [EnvValueFromProcessOptions](#cdk8s-plus-envvaluefromprocessoptions)|Options to specify an environment variable value from the process environment.
 [EnvValueFromSecretOptions](#cdk8s-plus-envvaluefromsecretoptions)|Options to specify an environment variable value from a Secret.
 [ExposeOptions](#cdk8s-plus-exposeoptions)|Options for exposing a deployment via a service.
 [JobProps](#cdk8s-plus-jobprops)|Properties for initialization of `Job`.
-[JobSpecProps](#cdk8s-plus-jobspecprops)|Properties for initialization of `JobSpec`.
+[JobSpec](#cdk8s-plus-jobspec)|JobSpec is the specification of the desired behavior of the Job.
 [MountOptions](#cdk8s-plus-mountoptions)|Options for mounts.
 [PathMapping](#cdk8s-plus-pathmapping)|Maps a string key to a path within a volume.
 [PodProps](#cdk8s-plus-podprops)|Properties for initialization of `Pod`.
-[PodSpecProps](#cdk8s-plus-podspecprops)|Properties for initialization of `PodSpec`.
+[PodSpec](#cdk8s-plus-podspec)|PodSpec is the specification of the desired behavior of the Pod.
 [ResourceProps](#cdk8s-plus-resourceprops)|Initialization properties for resources.
 [SecretProps](#cdk8s-plus-secretprops)|*No description*
 [ServiceAccountProps](#cdk8s-plus-serviceaccountprops)|Properties for initialization of `ServiceAccount`.
 [ServicePort](#cdk8s-plus-serviceport)|Definition of a service port.
 [ServiceProps](#cdk8s-plus-serviceprops)|Properties for initialization of `Service`.
-[ServiceSpecProps](#cdk8s-plus-servicespecprops)|Properties for initialization of `ServiceSpec`.
+[ServiceSpec](#cdk8s-plus-servicespec)|ServiceSpec is the specification of the desired behavior of the Service.
 [SizeConversionOptions](#cdk8s-plus-sizeconversionoptions)|Options for how to convert time to a different unit.
 [TimeConversionOptions](#cdk8s-plus-timeconversionoptions)|Options for how to convert time to a different unit.
 [VolumeMount](#cdk8s-plus-volumemount)|Mount a volume from the pod to the container.
@@ -348,7 +348,7 @@ new Deployment(scope: Construct, id: string, props?: DeploymentProps)
 Name | Type | Description 
 -----|------|-------------
 **apiObject**🔹 | <code>[ApiObject](#cdk8s-apiobject)</code> | The underlying cdk8s API object.
-**spec**🔹 | <code>[DeploymentSpec](#cdk8s-plus-deploymentspec)</code> | Provides access to the underlying spec.
+**spec**🔹 | <code>[DeploymentSpecDefinition](#cdk8s-plus-deploymentspecdefinition)</code> | Provides access to the underlying spec.
 
 ### Methods
 
@@ -368,16 +368,16 @@ expose(options: ExposeOptions): Service
 <span style="text-decoration: underline">Parameters:</span>
 * **options** (<code>[ExposeOptions](#cdk8s-plus-exposeoptions)</code>)  - Options.
   * **port** (<code>number</code>)  The port number the service will bind to. 
-  * **serviceType** (<code>[ServiceType](#cdk8s-plus-servicetype)</code>)  The type of the exposed service. <span style="text-decoration: underline">*Default*</span>: ClusterIP.
+  * **serviceType** (<code>[ServiceType](#cdk8s-plus-servicetype)</code>)  The type of the exposed service. <span style="text-decoration: underline">*Default*</span>: 'ClusterIP'
 
 <span style="text-decoration: underline">Returns</span>:
 * <code>[Service](#cdk8s-plus-service)</code>
 
 
 
-## class DeploymentSpec 🔹 <a id="cdk8s-plus-deploymentspec"></a>
+## class DeploymentSpecDefinition 🔹 <a id="cdk8s-plus-deploymentspecdefinition"></a>
 
-DeploymentSpec is the specification of the desired behavior of the Deployment.
+Provides read/write API over the `DeploymentSpec` struct.
 
 
 ### Initializer
@@ -388,13 +388,13 @@ DeploymentSpec is the specification of the desired behavior of the Deployment.
 <span style="text-decoration: underline">Usage:</span>
 
 ```ts
-new DeploymentSpec(props?: DeploymentSpecProps)
+new DeploymentSpecDefinition(spec?: DeploymentSpec)
 ```
 
 <span style="text-decoration: underline">Parameters:</span>
-* **props** (<code>[DeploymentSpecProps](#cdk8s-plus-deploymentspecprops)</code>)  *No description*
+* **spec** (<code>[DeploymentSpec](#cdk8s-plus-deploymentspec)</code>)  *No description*
   * **podMetadataTemplate** (<code>[ApiObjectMetadata](#cdk8s-apiobjectmetadata)</code>)  Template for pod metadata. <span style="text-decoration: underline">*Optional*</span>
-  * **podSpecTemplate** (<code>[PodSpecProps](#cdk8s-plus-podspecprops)</code>)  Template for pod specs. <span style="text-decoration: underline">*Optional*</span>
+  * **podSpecTemplate** (<code>[PodSpec](#cdk8s-plus-podspec)</code>)  Template for pod specs. <span style="text-decoration: underline">*Optional*</span>
   * **replicas** (<code>number</code>)  Number of desired pods. <span style="text-decoration: underline">*Default*</span>: 1
 
 
@@ -404,13 +404,13 @@ new DeploymentSpec(props?: DeploymentSpecProps)
 
 Name | Type | Description 
 -----|------|-------------
-**podMetadataTemplate**🔹 | <code>[ApiObjectMetadataDefinition](#cdk8s-apiobjectmetadatadefinition)</code> | <span></span>
-**podSpecTemplate**🔹 | <code>[PodSpec](#cdk8s-plus-podspec)</code> | Provides access to the underlying pod template spec.
+**podMetadataTemplate**🔹 | <code>[ApiObjectMetadataDefinition](#cdk8s-apiobjectmetadatadefinition)</code> | Provides access to the underlying pod template metadata.
+**podSpecTemplate**🔹 | <code>[PodSpecDefinition](#cdk8s-plus-podspecdefinition)</code> | Provides access to the underlying pod template spec.
 
 ### Methods
 
 
-#### selectByLabel(key, value)🔹 <a id="cdk8s-plus-deploymentspec-selectbylabel"></a>
+#### selectByLabel(key, value)🔹 <a id="cdk8s-plus-deploymentspecdefinition-selectbylabel"></a>
 
 Configure a label selector to this deployment.
 
@@ -821,13 +821,13 @@ new Job(scope: Construct, id: string, props?: JobProps)
 Name | Type | Description 
 -----|------|-------------
 **apiObject**🔹 | <code>[ApiObject](#cdk8s-apiobject)</code> | The underlying cdk8s API object.
-**spec**🔹 | <code>[JobSpec](#cdk8s-plus-jobspec)</code> | <span></span>
+**spec**🔹 | <code>[JobSpecDefinition](#cdk8s-plus-jobspecdefinition)</code> | <span></span>
 
 
 
-## class JobSpec 🔹 <a id="cdk8s-plus-jobspec"></a>
+## class JobSpecDefinition 🔹 <a id="cdk8s-plus-jobspecdefinition"></a>
 
-
+Provides read/write API over the `JobSpec` struct.
 
 
 ### Initializer
@@ -838,13 +838,13 @@ Name | Type | Description
 <span style="text-decoration: underline">Usage:</span>
 
 ```ts
-new JobSpec(props?: JobSpecProps)
+new JobSpecDefinition(spec?: JobSpec)
 ```
 
 <span style="text-decoration: underline">Parameters:</span>
-* **props** (<code>[JobSpecProps](#cdk8s-plus-jobspecprops)</code>)  *No description*
+* **spec** (<code>[JobSpec](#cdk8s-plus-jobspec)</code>)  *No description*
   * **podMetadataTemplate** (<code>[ApiObjectMetadata](#cdk8s-apiobjectmetadata)</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
-  * **podSpecTemplate** (<code>[PodSpecProps](#cdk8s-plus-podspecprops)</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
+  * **podSpecTemplate** (<code>[PodSpec](#cdk8s-plus-podspec)</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **ttlAfterFinished** (<code>[Duration](#cdk8s-plus-duration)</code>)  Limits the lifetime of a Job that has finished execution (either Complete or Failed). <span style="text-decoration: underline">*Default*</span>: If this field is unset, the Job won't be automatically deleted.
 
 
@@ -854,9 +854,9 @@ new JobSpec(props?: JobSpecProps)
 
 Name | Type | Description 
 -----|------|-------------
-**podMetadataTemplate**🔹 | <code>[ApiObjectMetadataDefinition](#cdk8s-apiobjectmetadatadefinition)</code> | <span></span>
-**podSpecTemplate**🔹 | <code>[PodSpec](#cdk8s-plus-podspec)</code> | <span></span>
-**ttlAfterFinished**?🔹 | <code>[Duration](#cdk8s-plus-duration)</code> | <span style="text-decoration: underline">*Optional*</span>
+**podMetadataTemplate**🔹 | <code>[ApiObjectMetadataDefinition](#cdk8s-apiobjectmetadatadefinition)</code> | Provides access to the underlying pod template metadata.
+**podSpecTemplate**🔹 | <code>[PodSpecDefinition](#cdk8s-plus-podspecdefinition)</code> | Provides access to the underlying pod template spec.
+**ttlAfterFinished**?🔹 | <code>[Duration](#cdk8s-plus-duration)</code> | The TTL configured for the job.<br/><span style="text-decoration: underline">*Optional*</span>
 
 
 
@@ -896,13 +896,13 @@ new Pod(scope: Construct, id: string, props?: PodProps)
 Name | Type | Description 
 -----|------|-------------
 **apiObject**🔹 | <code>[ApiObject](#cdk8s-apiobject)</code> | The underlying cdk8s API object.
-**spec**🔹 | <code>[PodSpec](#cdk8s-plus-podspec)</code> | Provides access to the underlying spec.
+**spec**🔹 | <code>[PodSpecDefinition](#cdk8s-plus-podspecdefinition)</code> | Provides access to the underlying spec.
 
 
 
-## class PodSpec 🔹 <a id="cdk8s-plus-podspec"></a>
+## class PodSpecDefinition 🔹 <a id="cdk8s-plus-podspecdefinition"></a>
 
-A description of a pod.
+Provides read/write API over the `PodSpec` struct.
 
 
 ### Initializer
@@ -913,11 +913,11 @@ A description of a pod.
 <span style="text-decoration: underline">Usage:</span>
 
 ```ts
-new PodSpec(props?: PodSpecProps)
+new PodSpecDefinition(spec?: PodSpec)
 ```
 
 <span style="text-decoration: underline">Parameters:</span>
-* **props** (<code>[PodSpecProps](#cdk8s-plus-podspecprops)</code>)  *No description*
+* **spec** (<code>[PodSpec](#cdk8s-plus-podspec)</code>)  *No description*
   * **containers** (<code>Array<[Container](#cdk8s-plus-container)></code>)  List of containers belonging to the pod. <span style="text-decoration: underline">*Default*</span>: No containers. Note that a pod spec must include at least one container.
   * **restartPolicy** (<code>[RestartPolicy](#cdk8s-plus-restartpolicy)</code>)  Restart policy for all containers within the pod. <span style="text-decoration: underline">*Default*</span>: RestartPolicy.ALWAYS
   * **serviceAccount** (<code>[IServiceAccount](#cdk8s-plus-iserviceaccount)</code>)  A service account provides an identity for processes that run in a Pod. <span style="text-decoration: underline">*Default*</span>: No service account.
@@ -938,7 +938,7 @@ Name | Type | Description
 ### Methods
 
 
-#### addContainer(container)🔹 <a id="cdk8s-plus-podspec-addcontainer"></a>
+#### addContainer(container)🔹 <a id="cdk8s-plus-podspecdefinition-addcontainer"></a>
 
 Adds a container to this pod.
 
@@ -954,7 +954,7 @@ addContainer(container: Container): void
 
 
 
-#### addVolume(volume)🔹 <a id="cdk8s-plus-podspec-addvolume"></a>
+#### addVolume(volume)🔹 <a id="cdk8s-plus-podspecdefinition-addvolume"></a>
 
 Adds a volume to this pod.
 
@@ -1133,7 +1133,7 @@ new Service(scope: Construct, id: string, props?: ServiceProps)
 Name | Type | Description 
 -----|------|-------------
 **apiObject**🔹 | <code>[ApiObject](#cdk8s-apiobject)</code> | The underlying cdk8s API object.
-**spec**🔹 | <code>[ServiceSpec](#cdk8s-plus-servicespec)</code> | Provides access to the underlying spec.
+**spec**🔹 | <code>[ServiceSpecDefinition](#cdk8s-plus-servicespecdefinition)</code> | Provides access to the underlying spec.
 
 
 
@@ -1216,9 +1216,9 @@ static fromServiceAccountName(name: string): IServiceAccount
 
 
 
-## class ServiceSpec 🔹 <a id="cdk8s-plus-servicespec"></a>
+## class ServiceSpecDefinition 🔹 <a id="cdk8s-plus-servicespecdefinition"></a>
 
-A description of a service.
+Provides read/write API over the `ServiceSpec` struct.
 
 
 ### Initializer
@@ -1229,11 +1229,11 @@ A description of a service.
 <span style="text-decoration: underline">Usage:</span>
 
 ```ts
-new ServiceSpec(props?: ServiceSpecProps)
+new ServiceSpecDefinition(spec?: ServiceSpec)
 ```
 
 <span style="text-decoration: underline">Parameters:</span>
-* **props** (<code>[ServiceSpecProps](#cdk8s-plus-servicespecprops)</code>)  *No description*
+* **spec** (<code>[ServiceSpec](#cdk8s-plus-servicespec)</code>)  *No description*
   * **clusterIP** (<code>string</code>)  clusterIP is the IP address of the service and is usually assigned randomly by the master. <span style="text-decoration: underline">*Default*</span>: Automatically assigned.
   * **externalIPs** (<code>Array<string></code>)  externalIPs is a list of IP addresses for which nodes in the cluster will also accept traffic for this service. <span style="text-decoration: underline">*Default*</span>: No external IPs.
   * **ports** (<code>Array<[ServicePort](#cdk8s-plus-serviceport)></code>)  The port exposed by this service. <span style="text-decoration: underline">*Optional*</span>
@@ -1243,7 +1243,7 @@ new ServiceSpec(props?: ServiceSpecProps)
 ### Methods
 
 
-#### selectByLabel(key, value)🔹 <a id="cdk8s-plus-servicespec-selectbylabel"></a>
+#### selectByLabel(key, value)🔹 <a id="cdk8s-plus-servicespecdefinition-selectbylabel"></a>
 
 Services defined using this spec will select pods according the provided label.
 
@@ -1260,7 +1260,7 @@ selectByLabel(key: string, value: string): void
 
 
 
-#### serve(port)🔹 <a id="cdk8s-plus-servicespec-serve"></a>
+#### serve(port)🔹 <a id="cdk8s-plus-servicespecdefinition-serve"></a>
 
 Configure a port the service will bind to.
 
@@ -1668,17 +1668,17 @@ Name | Type | Description
 
 
 
-## struct DeploymentSpecProps 🔹 <a id="cdk8s-plus-deploymentspecprops"></a>
+## struct DeploymentSpec 🔹 <a id="cdk8s-plus-deploymentspec"></a>
 
 
-Properties for initialization of `DeploymentSpec`.
+DeploymentSpec is the specification of the desired behavior of the Deployment.
 
 
 
 Name | Type | Description 
 -----|------|-------------
 **podMetadataTemplate**?🔹 | <code>[ApiObjectMetadata](#cdk8s-apiobjectmetadata)</code> | Template for pod metadata.<br/><span style="text-decoration: underline">*Optional*</span>
-**podSpecTemplate**?🔹 | <code>[PodSpecProps](#cdk8s-plus-podspecprops)</code> | Template for pod specs.<br/><span style="text-decoration: underline">*Optional*</span>
+**podSpecTemplate**?🔹 | <code>[PodSpec](#cdk8s-plus-podspec)</code> | Template for pod specs.<br/><span style="text-decoration: underline">*Optional*</span>
 **replicas**?🔹 | <code>number</code> | Number of desired pods.<br/><span style="text-decoration: underline">*Default*</span>: 1
 
 
@@ -1746,7 +1746,7 @@ Options for exposing a deployment via a service.
 Name | Type | Description 
 -----|------|-------------
 **port**🔹 | <code>number</code> | The port number the service will bind to.
-**serviceType**?🔹 | <code>[ServiceType](#cdk8s-plus-servicetype)</code> | The type of the exposed service.<br/><span style="text-decoration: underline">*Default*</span>: ClusterIP.
+**serviceType**?🔹 | <code>[ServiceType](#cdk8s-plus-servicetype)</code> | The type of the exposed service.<br/><span style="text-decoration: underline">*Default*</span>: 'ClusterIP'
 
 
 
@@ -1827,17 +1827,17 @@ Name | Type | Description
 
 
 
-## struct JobSpecProps 🔹 <a id="cdk8s-plus-jobspecprops"></a>
+## struct JobSpec 🔹 <a id="cdk8s-plus-jobspec"></a>
 
 
-Properties for initialization of `JobSpec`.
+JobSpec is the specification of the desired behavior of the Job.
 
 
 
 Name | Type | Description 
 -----|------|-------------
 **podMetadataTemplate**?🔹 | <code>[ApiObjectMetadata](#cdk8s-apiobjectmetadata)</code> | <span style="text-decoration: underline">*Optional*</span>
-**podSpecTemplate**?🔹 | <code>[PodSpecProps](#cdk8s-plus-podspecprops)</code> | <span style="text-decoration: underline">*Optional*</span>
+**podSpecTemplate**?🔹 | <code>[PodSpec](#cdk8s-plus-podspec)</code> | <span style="text-decoration: underline">*Optional*</span>
 **ttlAfterFinished**?🔹 | <code>[Duration](#cdk8s-plus-duration)</code> | Limits the lifetime of a Job that has finished execution (either Complete or Failed).<br/><span style="text-decoration: underline">*Default*</span>: If this field is unset, the Job won't be automatically deleted.
 
 
@@ -1886,10 +1886,10 @@ Name | Type | Description
 
 
 
-## struct PodSpecProps 🔹 <a id="cdk8s-plus-podspecprops"></a>
+## struct PodSpec 🔹 <a id="cdk8s-plus-podspec"></a>
 
 
-Properties for initialization of `PodSpec`.
+PodSpec is the specification of the desired behavior of the Pod.
 
 
 
@@ -1972,10 +1972,10 @@ Name | Type | Description
 
 
 
-## struct ServiceSpecProps 🔹 <a id="cdk8s-plus-servicespecprops"></a>
+## struct ServiceSpec 🔹 <a id="cdk8s-plus-servicespec"></a>
 
 
-Properties for initialization of `ServiceSpec`.
+ServiceSpec is the specification of the desired behavior of the Service.
 
 
 

@@ -38,12 +38,12 @@ export class Pod extends Resource {
    * You can use this field to apply post instantiation mutations
    * to the spec.
    */
-  public readonly spec: PodSpec;
+  public readonly spec: PodSpecDefinition;
 
   constructor(scope: Construct, id: string, props: PodProps = {}) {
     super(scope, id, props);
 
-    this.spec = props.spec ?? new PodSpec();
+    this.spec = new PodSpecDefinition(props.spec);
 
     this.apiObject = new k8s.Pod(this, 'Pod', {
       metadata: props.metadata,
@@ -54,15 +54,15 @@ export class Pod extends Resource {
 }
 
 /**
- * Properties for initialization of `PodSpec`.
+ * PodSpec is the specification of the desired behavior of the Pod.
  */
-export interface PodSpecProps {
+export interface PodSpec {
 
   /**
    * List of containers belonging to the pod. Containers cannot currently be
    * added or removed. There must be at least one container in a Pod.
    *
-   * You can add additionnal containers using `podSpec.addContainer()`
+   * You can add additional containers using `podSpec.addContainer()`
    *
    * @default - No containers. Note that a pod spec must include at least one container.
    */
@@ -126,9 +126,9 @@ export enum RestartPolicy {
 }
 
 /**
- * A description of a pod.
+ * Provides read/write API over the `PodSpec` struct.
  */
-export class PodSpec {
+export class PodSpecDefinition {
 
   /**
    * List of containers belonging to the pod.
@@ -150,11 +150,11 @@ export class PodSpec {
    */
   public serviceAccount?: IServiceAccount;
 
-  constructor(props: PodSpecProps = {}) {
-    this.containers = props.containers ?? [];
-    this.volumes = props.volumes ?? [];
-    this.restartPolicy = props.restartPolicy;
-    this.serviceAccount = props.serviceAccount;
+  constructor(spec: PodSpec = {}) {
+    this.containers = spec.containers ?? [];
+    this.volumes = spec.volumes ?? [];
+    this.restartPolicy = spec.restartPolicy;
+    this.serviceAccount = spec.serviceAccount;
   }
 
   /**

@@ -8,7 +8,7 @@ describe('DeploymentSpec', () => {
   test('Instantiation properties are all respected', () => {
     const chart = Testing.chart();
     const deployment = new kplus.Deployment(chart, 'Deployment');
-    const spec = new kplus.DeploymentSpec({
+    const spec = new kplus.DeploymentSpecDefinition({
       replicas: 3,
       podSpecTemplate: {
         serviceAccount: kplus.ServiceAccount.fromServiceAccountName('my-service-account'),
@@ -25,7 +25,7 @@ describe('DeploymentSpec', () => {
     expect(spec.podSpecTemplate.containers[0].image).toBe('my-image');
   });
   test('Can select labels', () => {
-    const spec = new kplus.DeploymentSpec();
+    const spec = new kplus.DeploymentSpecDefinition();
 
     spec.podSpecTemplate.addContainer(
       new kplus.Container({
@@ -134,26 +134,4 @@ describe('Deployment', () => {
 
   });
 
-  test('Can be instantiated with an existing spec', () => {
-
-    const spec = new kplus.DeploymentSpec({
-      podSpecTemplate: {
-        containers: [new kplus.Container({
-          image: 'image',
-          port: 9300,
-        })],
-      },
-    });
-
-    const chart = Testing.chart();
-    new kplus.Deployment(chart, 'Deployment', {
-      spec: spec,
-    });
-
-    const actual = Testing.synth(chart)[0].spec.template.spec.containers[0];
-
-    expect(actual.image).toEqual('image');
-    expect(actual.ports[0].containerPort).toEqual(9300);
-
-  });
 });

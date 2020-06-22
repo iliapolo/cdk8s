@@ -3,7 +3,7 @@ import { ApiObject, ApiObjectMetadata, ApiObjectMetadataDefinition } from 'cdk8s
 import { Construct } from 'constructs';
 
 import * as k8s from './imports/k8s';
-import { RestartPolicy, PodSpecProps, PodSpec } from './pod';
+import { RestartPolicy, PodSpec, PodSpecDefinition } from './pod';
 import { Duration } from './duration';
 import { lazy } from './utils';
 
@@ -31,12 +31,12 @@ export interface JobProps extends ResourceProps {
 export class Job extends Resource {
 
   protected readonly apiObject: ApiObject;
-  public readonly spec: JobSpec;
+  public readonly spec: JobSpecDefinition;
 
   constructor(scope: Construct, id: string, props: JobProps = {}) {
     super(scope, id, props);
 
-    this.spec = props.spec ?? new JobSpec();
+    this.spec = new JobSpecDefinition(props.spec);
 
     this.apiObject = new k8s.Job(this, 'Default', {
       metadata: props.metadata,
@@ -46,11 +46,11 @@ export class Job extends Resource {
 }
 
 /**
- * Properties for initialization of `JobSpec`.
+ * JobSpec is the specification of the desired behavior of the Job.
  */
-export interface JobSpecProps {
+export interface JobSpec {
 
-  readonly podSpecTemplate?: PodSpecProps;
+  readonly podSpecTemplate?: PodSpec;
   readonly podMetadataTemplate?: ApiObjectMetadata;
 
   /**
@@ -66,16 +66,37 @@ export interface JobSpecProps {
    */
   readonly ttlAfterFinished?: Duration;
 }
-export class JobSpec {
-  public readonly podSpecTemplate: PodSpec;
+
+/**
+ * Provides read/write API over the `JobSpec` struct.
+ */
+export class JobSpecDefinition {
+
+  /**
+   * Provides access to the underlying pod template spec.
+   *
+   * You can use this field to apply post instatiation mutations
+   * to the spec.
+   */
+  public readonly podSpecTemplate: PodSpecDefinition;
+
+  /**
+   * Provides access to the underlying pod template metadata.
+   *
+   * You can use this field to apply post instatiation mutations
+   * to the metadata.
+   */
   public readonly podMetadataTemplate: ApiObjectMetadataDefinition;
 
+  /**
+   * The TTL configured for the job.
+   */
   public readonly ttlAfterFinished?: Duration;
 
-  constructor(props: JobSpecProps = {}) {
-    this.podSpecTemplate = new PodSpec(props.podSpecTemplate),
-    this.podMetadataTemplate = new ApiObjectMetadataDefinition(props.podMetadataTemplate);
-    this.ttlAfterFinished = props.ttlAfterFinished;
+  constructor(spec: JobSpec = {}) {
+    this.podSpecTemplate = new PodSpecDefinition(spec.podSpecTemplate),
+    this.podMetadataTemplate = new ApiObjectMetadataDefinition(spec.podMetadataTemplate);
+    this.ttlAfterFinished = spec.ttlAfterFinished;
 
     if (!this.podSpecTemplate.restartPolicy) {
       this.podSpecTemplate.restartPolicy = RestartPolicy.NEVER;
