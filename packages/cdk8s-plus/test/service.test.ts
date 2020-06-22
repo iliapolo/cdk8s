@@ -2,7 +2,7 @@ import * as kplus from '../src';
 import * as k from '../src/imports/k8s';
 import { Testing } from 'cdk8s';
 
-describe('ServiceSpec', () => {
+describe('ServiceSpecDefinition', () => {
   test('Instantiation properties are all accepted', () => {
     const ports = [{ port: 9000, targetPort: 80 }];
     const externalIPs = ['ExternalIP'];

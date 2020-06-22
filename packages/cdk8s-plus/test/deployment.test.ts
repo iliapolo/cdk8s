@@ -3,7 +3,7 @@ import * as k8s from '../src/imports/k8s';
 import { Testing } from 'cdk8s';
 import { Node } from 'constructs';
 
-describe('DeploymentSpec', () => {
+describe('DeploymentSpecDefinition', () => {
 
   test('Instantiation properties are all respected', () => {
     const chart = Testing.chart();

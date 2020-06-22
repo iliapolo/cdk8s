@@ -2,7 +2,7 @@ import * as kplus from '../src';
 import * as k from '../src/imports/k8s';
 import { Testing } from 'cdk8s';
 
-describe('JobSpec', () => {
+describe('JobSpecDefinition', () => {
   test('Instantiation properties are all respected', () => {
     const spec = new kplus.JobSpecDefinition({
       podSpecTemplate: {

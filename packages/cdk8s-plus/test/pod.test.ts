@@ -3,7 +3,7 @@ import * as k8s from '../src/imports/k8s';
 import { RestartPolicy } from '../src';
 import { Testing } from 'cdk8s';
 
-describe('PodSpec', () => {
+describe('PodSpecDefinition', () => {
   test('Can add container post instantiation', () => {
     const spec = new kplus.PodSpecDefinition();
 
