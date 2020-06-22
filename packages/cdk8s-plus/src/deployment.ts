@@ -191,9 +191,7 @@ export class DeploymentSpec {
   /**
    * The labels this deployment will match against in order to select pods.
    *
-   * Use `selectByLabel` to add labels.
-   *
-   * Returns an immutable copy.
+   * Returns a a copy. Use `selectByLabel()` to add labels.
    */
   public get labelSelector(): Record<string, string> {
     return { ...this._labelSelector };

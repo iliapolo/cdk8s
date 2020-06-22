@@ -174,7 +174,7 @@ export class PodSpec {
   /**
    * List of volumes that can be mounted by containers belonging to the pod.
    *
-   * Returns an immutable copy.
+   * Returns a copy. To add volumes, use `addVolume()`.
    */
   public get volumes() {
     return [ ...this._volumes ];

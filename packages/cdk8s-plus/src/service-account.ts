@@ -79,7 +79,7 @@ export class ServiceAccount extends Resource implements IServiceAccount {
    * List of secrets allowed to be used by pods running using this service
    * account.
    *
-   * Returns an immutable copy.
+   * Returns a copy. To add a secret, use `addSecret()`.
    */
   public get secrets() {
     return [ ...this._secrets ];

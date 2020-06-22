@@ -239,7 +239,7 @@ export class Container {
   /**
    * The environment variables for this container.
    *
-   * Returns an immutable copy.
+   * Returns a copy. To add environment variables use `addEnv()`.
    */
   public get env(): Record<string, EnvValue> {
     return { ...this._env };

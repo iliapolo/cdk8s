@@ -97,7 +97,7 @@ export class ConfigMap extends Resource implements IConfigMap {
   /**
    * The data associated with this config map.
    *
-   * Returns an immutable copy.
+   * Returns an copy. To add data records, use `addData()` or `addBinaryData()`.
    */
   public get data(): Record<string, string> {
     return { ...this._data };
@@ -120,7 +120,7 @@ export class ConfigMap extends Resource implements IConfigMap {
   /**
    * The binary data associated with this config map.
    *
-   * Returns an immutable copy.
+   * Returns a copy. To add data records, use `addBinaryData()` or `addData()`.
    */
   public get binaryData(): Record<string, string> {
     return { ...this._binaryData };
