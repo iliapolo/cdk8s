@@ -100,7 +100,7 @@ object is already initialized it should be possible to:
    ```
 
 
-The reasoning behind this is two fold:
+The reasoning behind this is three fold:
 
 1. Kubernetes spec objects have an extremely large surface area. Configuring all
    properties in the constructor can easily result in cluttered and un-readable
